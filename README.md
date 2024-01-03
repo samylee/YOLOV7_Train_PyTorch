@@ -14,7 +14,7 @@
 ## 使用说明
 ### 要求
 > Python >= 3.6 \
-> PyTorch >= 1.4
+> PyTorch >= 1.7
 ### 数据集下载
 ```shell script
 cd <path-to-voc>/
@@ -33,8 +33,8 @@ cat 2007_train.txt 2007_val.txt 2012_*.txt > train.txt
 ```
 ### 预训练模型下载
 ```shell script
-cd pretrain
-[yolov7_samylee.weights](https://pan.baidu.com/s/1UYZR4QV_WaWBJBWg0lxZVw), 提取码8888  
+cd pretrain  
+[yolov7_samylee.weights(提取码8888)](https://pan.baidu.com/s/1UYZR4QV_WaWBJBWg0lxZVw)
 ```
 ### 训练和测试
 ```shell script
