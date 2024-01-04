@@ -4,8 +4,9 @@
 ## 指标展示
 |Model| train | test | mAP@0.5 | mAP@0.75 | batch 1 fps |
 |-----|------|------|-----|-----|-----|
-|yolov7(train from yolov7, yolov5-loss) | 0712 |	2007_test |	88.66 |	--- |	161 fps |
-|**yolov7(ours, yolov5-loss)** | 0712 |	2007_test |	**88.71** |	**76.80** |	**161 fps** |
+|yolov7(train from yolov7) | 0712 |	2007_test |	88.66 |	--- |	161 fps |
+|**yolov7(ours)** | 0712 |	2007_test |	**88.71** |	**76.80** |	**161 fps** |
+`yolov7(train from yolov7) loss: yolov5-loss`
 
 ## 效果展示
 <img src="assets/result1.jpg" width="400" height="260"/>   <img src="assets/result2.jpg" width="400" height="260"/>   
