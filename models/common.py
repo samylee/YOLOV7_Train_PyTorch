@@ -111,3 +111,29 @@ class RepConv(nn.Module):
             id_out = self.rbr_identity(x)
 
         return self.act(self.rbr_dense(x) + self.rbr_1x1(x) + id_out)
+
+
+class ImplicitA(nn.Module):
+    def __init__(self, channel, mean=0., std=.02):
+        super(ImplicitA, self).__init__()
+        self.channel = channel
+        self.mean = mean
+        self.std = std
+        self.implicit = nn.Parameter(torch.zeros(1, channel, 1, 1))
+        nn.init.normal_(self.implicit, mean=self.mean, std=self.std)
+
+    def forward(self, x):
+        return self.implicit + x
+
+
+class ImplicitM(nn.Module):
+    def __init__(self, channel, mean=1., std=.02):
+        super(ImplicitM, self).__init__()
+        self.channel = channel
+        self.mean = mean
+        self.std = std
+        self.implicit = nn.Parameter(torch.ones(1, channel, 1, 1))
+        nn.init.normal_(self.implicit, mean=self.mean, std=self.std)
+
+    def forward(self, x):
+        return self.implicit * x
