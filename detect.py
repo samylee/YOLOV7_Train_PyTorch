@@ -70,9 +70,10 @@ def preprocess(img, net_size):
 
 def model_init(model_path, B=3, C=20):
     # load moel
-    model = YOLOV7(B=B, C=C)
+    model = YOLOV7(B=B, C=C, deploy=True)
     checkpoint = torch.load(model_path, map_location='cpu')
     model.load_state_dict(checkpoint['ema'])
+    model.fuse_implicit()
     model.eval()
     return model
 
