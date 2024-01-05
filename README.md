@@ -43,7 +43,9 @@ IDetect mode: set `deploy=False`
 
 python train.py
 ```
-已训练好的模型：[百度云(提取码:8888)](https://pan.baidu.com/s/1Z4CIdiopQSFodpR4RopqSw)
+已训练好的模型：
+[DetectMode(提取码:8888)](https://pan.baidu.com/s/1Z4CIdiopQSFodpR4RopqSw)
+[IDetectMode(提取码:8888)](https://pan.baidu.com/s/1EU8Sj1ViLURF1ZS6LIM2-g)
 ```shell script
 python detect.py
 ```
