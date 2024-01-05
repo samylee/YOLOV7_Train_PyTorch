@@ -1,12 +1,13 @@
 import torch
 import torch.nn as nn
 
-from models.common import BasicConv, MP, ELAN, ELANW, SPPCSPC, RepConv
+from models.common import BasicConv, MP, ELAN, ELANW, SPPCSPC, RepConv, ImplicitA, ImplicitM
 
 
 class YOLOV7(nn.Module):
-    def __init__(self, B=3, C=20):
+    def __init__(self, B=3, C=20, deploy=False):
         super(YOLOV7, self).__init__()
+        self.deploy = deploy
         in_channels = 3
         yolo_channels = (5 + C) * B
 
@@ -51,6 +52,9 @@ class YOLOV7(nn.Module):
         self.yolo2 = nn.Conv2d(512, yolo_channels, 1)
         self.yolo3 = nn.Conv2d(1024, yolo_channels, 1)
 
+        self.ia = nn.ModuleList(ImplicitA(ch) for ch in (256, 512, 1024))
+        self.im = nn.ModuleList(ImplicitM(yolo_channels) for _ in (256, 512, 1024))
+
     def forward(self, x):
         # backbone
         x = self.conv4(self.conv3(self.conv2(self.conv1(x))))
@@ -81,8 +85,46 @@ class YOLOV7(nn.Module):
         x_88 = self.repconv2(x_88)
         x_101 = self.repconv3(x_101)
 
-        yolo1 = self.yolo1(x_75)
-        yolo2 = self.yolo2(x_88)
-        yolo3 = self.yolo3(x_101)
+        if self.deploy:
+            yolo1 = self.yolo1(x_75)
+            yolo2 = self.yolo2(x_88)
+            yolo3 = self.yolo3(x_101)
+        else:
+            yolo1 = self.im[0](self.yolo1(self.ia[0](x_75)))
+            yolo2 = self.im[1](self.yolo2(self.ia[1](x_88)))
+            yolo3 = self.im[2](self.yolo3(self.ia[2](x_101)))
 
         return [yolo1, yolo2, yolo3]
+
+    def fuse_implicit(self):
+        print("fuse implicit")
+        with torch.no_grad():
+            # yolo1
+            # fuse ImplicitA and Convolution
+            c1, c2, _, _ = self.yolo1.weight.shape
+            c1_, c2_, _, _ = self.ia[0].implicit.shape
+            self.yolo1.bias += torch.matmul(self.yolo1.weight.reshape(c1, c2), self.ia[0].implicit.reshape(c2_, c1_)).squeeze(1)
+            # fuse ImplicitM and Convolution
+            c1, c2, _, _ = self.im[0].implicit.shape
+            self.yolo1.bias *= self.im[0].implicit.reshape(c2)
+            self.yolo1.weight *= self.im[0].implicit.transpose(0, 1)
+
+            # yolo1
+            # fuse ImplicitA and Convolution
+            c1, c2, _, _ = self.yolo2.weight.shape
+            c1_, c2_, _, _ = self.ia[1].implicit.shape
+            self.yolo2.bias += torch.matmul(self.yolo2.weight.reshape(c1, c2), self.ia[1].implicit.reshape(c2_, c1_)).squeeze(1)
+            # fuse ImplicitM and Convolution
+            c1, c2, _, _ = self.im[1].implicit.shape
+            self.yolo2.bias *= self.im[1].implicit.reshape(c2)
+            self.yolo2.weight *= self.im[1].implicit.transpose(0, 1)
+
+            # yolo1
+            # fuse ImplicitA and Convolution
+            c1, c2, _, _ = self.yolo3.weight.shape
+            c1_, c2_, _, _ = self.ia[2].implicit.shape
+            self.yolo3.bias += torch.matmul(self.yolo3.weight.reshape(c1, c2), self.ia[2].implicit.reshape(c2_, c1_)).squeeze(1)
+            # fuse ImplicitM and Convolution
+            c1, c2, _, _ = self.im[2].implicit.shape
+            self.yolo3.bias *= self.im[2].implicit.reshape(c2)
+            self.yolo3.weight *= self.im[2].implicit.transpose(0, 1)
