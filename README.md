@@ -5,7 +5,9 @@
 |Model| train | test | mAP@0.5 | mAP@0.75 | batch 1 fps | tips |
 |-----|------|------|-----|-----|-----|-----|
 |yolov7(train from yolov7) | 0712 |	2007_test |	88.66 |	--- |	161 fps |	yolov5-loss, `Detect Head` |
+|yolov7(train from yolov7) | 0712 |	2007_test |	88.89 |	--- |	161 fps |	yolov5-loss, `IDetect Head` |
 |**yolov7(ours)** | 0712 |	2007_test |	**88.71** |	**76.80** |	**161 fps** | yolov5-loss, `Detect Head` |
+|**yolov7(ours)** | 0712 |	2007_test |	**89.01** |	**76.85** |	**161 fps** | yolov5-loss, `IDetect Head` |
 
 ## 效果展示
 <img src="assets/result1.jpg" width="400" height="260"/>   <img src="assets/result2.jpg" width="400" height="260"/>   
@@ -36,6 +38,9 @@ cat 2007_train.txt 2007_val.txt 2012_*.txt > train.txt
 
 ### 训练和测试
 ```shell script
+Detect mode: set `deploy=True`
+IDetect mode: set `deploy=False`
+
 python train.py
 ```
 已训练好的模型：[百度云(提取码:8888)](https://pan.baidu.com/s/1Z4CIdiopQSFodpR4RopqSw)
