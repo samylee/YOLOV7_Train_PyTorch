@@ -2,12 +2,12 @@
 1000行代码完美复现YOLOV7的训练和测试，精度、速度以及配置完全相同，两者模型可以无障碍相互转换  
 
 ## 指标展示
-|Model| train | test | mAP@0.5 | mAP@0.75 | batch 1 fps | tips |
-|-----|------|------|-----|-----|-----|-----|
-|yolov7(train from yolov7) | 0712 |	2007_test |	88.66 |	--- |	161 fps |	yolov5-loss, `Detect Head` |
-|yolov7(train from yolov7) | 0712 |	2007_test |	88.89 |	--- |	161 fps |	yolov5-loss, `IDetect Head` |
-|**yolov7(ours)** | 0712 |	2007_test |	**88.71** |	**76.80** |	**161 fps** | yolov5-loss, `Detect Head` |
-|**yolov7(ours)** | 0712 |	2007_test |	**89.01** |	**76.85** |	**161 fps** | yolov5-loss, `IDetect Head` |
+|Model| train | test | net_size | mAP@0.5 | mAP@0.75 | batch 1 fps | tips |
+|-----|------|------|-----|-----|-----|-----|-----|
+|yolov7(train from yolov7) | 0712 |	2007_test | 640x640 |	88.66 |	--- |	161 fps |	yolov5-loss, `Detect Head` |
+|yolov7(train from yolov7) | 0712 |	2007_test | 640x640 |	88.89 |	--- |	161 fps |	yolov5-loss, `IDetect Head` |
+|**yolov7(ours)** | 0712 |	2007_test | 640x640 |	**88.71** |	**76.80** |	**161 fps** | yolov5-loss, `Detect Head` |
+|**yolov7(ours)** | 0712 |	2007_test | 640x640 |	**89.01** |	**76.85** |	**161 fps** | yolov5-loss, `IDetect Head` |
 
 ## 效果展示
 <img src="assets/result1.jpg" width="400" height="260"/>   <img src="assets/result2.jpg" width="400" height="260"/>   
