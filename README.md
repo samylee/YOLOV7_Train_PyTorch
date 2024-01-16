@@ -12,7 +12,7 @@
 python -m torch.distributed.launch --nproc_per_node 2 --master_port 9527 train.py
 ```
 已训练好的模型：  
-[DetectMode(提取码:8888)](https://pan.baidu.com/s/1w4nOx0VSx5trbK7sL0PkBA)  
+[OTA-IDetectMode(提取码:8888)](https://pan.baidu.com/s/1w4nOx0VSx5trbK7sL0PkBA)  
 
 ## 参考
 https://blog.csdn.net/samylee  
