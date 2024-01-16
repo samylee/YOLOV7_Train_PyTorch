@@ -3,7 +3,7 @@
 
 ## 指标展示
 |Model| train | test | net_size | mAP@0.5 | FPS | tips |
-|-----|------|------|-----|-----|-----|-----|-----|
+|-----|------|------|-----|-----|-----|-----|
 |yolov7(train from yolov7) | 0712 |	2007_test | 640x640 |	89.11 |	161 |	yolov7-ota-loss, `IDetect Head` |
 |**yolov7(ours)** | 0712 |	2007_test | 640x640 |	**88.59** |	**161** | yolov7-ota-loss, `IDetect Head` |
 
