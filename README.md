@@ -34,7 +34,7 @@ python voc_label.py
 cat 2007_train.txt 2007_val.txt 2012_*.txt > train.txt
 ```
 ### 预训练模型下载
-[yolov7_samylee.weights(提取码8888)](https://pan.baidu.com/s/1UYZR4QV_WaWBJBWg0lxZVw)
+[yolov7_samylee.pth(提取码8888)](https://pan.baidu.com/s/1UYZR4QV_WaWBJBWg0lxZVw)
 
 ### 训练和测试
 ```shell script
